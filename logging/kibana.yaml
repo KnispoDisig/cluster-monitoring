@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: kube-logging
+  labels:
+    app: kibana
+spec:
+  ports:
+  - port: 5601
+  selector:
+    app: kibana
+  type: LoadBalancer
+
+---
+# zuzzas/kibana-xpackless:7.2.0
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: kube-logging
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: zuzzas/kibana-xpackless:5.5.2
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        env:
+          - name: ELASTICSEARCH_URL
+            value: http://elasticsearch:9200
+          - name: XPACK_MONITORING_ENABLED
+            value: "false"
+          - name: XPACK_SECURITY_ENABLED
+            value: "false"
+          - name: XPACK_REPORTING_ENABLED
+            value: "false"
+          - name: XPACK_ML_ENABLED
+            value: "false"   
+          - name: XPACK_GRAPH_ENABLED
+            value: "false"
+        ports:
+        - containerPort: 5601
+          name: ui
+          protocol: TCP
