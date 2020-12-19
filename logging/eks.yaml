@@ -10,6 +10,11 @@ spec:
     app: elasticsearch
   ports:
     - port: 9200
+      protocol: TCP
+      name: kibana
+    - port: 9300
+      protocol: TCP
+      name: elastalert
   type: NodePort
 
 ---
