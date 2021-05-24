@@ -14,7 +14,7 @@ spec:
       name: kibana
     - port: 9300
       protocol: TCP
-      name: elastalert
+      name: internal
   type: NodePort
 
 ---
@@ -26,7 +26,7 @@ metadata:
   namespace: kube-logging
 spec:
   serviceName: elasticsearch
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: elasticsearch

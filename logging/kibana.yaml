@@ -8,6 +8,7 @@ metadata:
 spec:
   ports:
   - port: 5601
+    targetPort: 5601
   selector:
     app: kibana
   type: LoadBalancer
@@ -38,6 +39,7 @@ spec:
         resources:
           limits:
             cpu: 1000m
+            # memory: 300Mi
           requests:
             cpu: 100m
         env:

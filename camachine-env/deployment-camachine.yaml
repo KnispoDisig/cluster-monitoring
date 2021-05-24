@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: camachine-deployment
+  labels:
+    app: camachine
+spec:
+  replicas: 3
+  
+  selector:
+    matchLabels:
+      app: camachine
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 33%
+  template:
+    metadata:
+      labels:
+        app: camachine
+    spec:
+      containers:
+      - name: camachine
+        image: markkar/camachine
+        stdin: true
+        stdinOnce: true
+        tty: true
+        resources:
+            limits:
+              memory: "512Mi"
+              cpu: 100m
+            requests:
+              memory: "150Mi"
+        ports:
+        - containerPort: 5000
+      

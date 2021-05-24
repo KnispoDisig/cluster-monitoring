@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: camachine
+spec: 
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector: 
+    app: camachine
