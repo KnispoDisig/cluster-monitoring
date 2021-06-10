@@ -1,0 +1,14 @@
+global: null
+route:
+  group_by: [cluster] 
+  receiver: slack-alerting
+  repeat_interval: 1m
+  group_interval: 1m
+  
+receivers:
+- name: slack-alerting
+  slack_configs:
+  - api_url: https://hooks.slack.com/services/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
+    channel: cluster-alert
+    send_resolved: true
+    text: "description: {{ .CommonAnnotations.description }}\nsummary: {{ .CommonAnnotations.summary }}"
